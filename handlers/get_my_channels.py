@@ -2,8 +2,10 @@ from aiogram import types, Router, F
 from aiogram.utils.keyboard import InlineKeyboardBuilder
 from database import Database
 from create_bot import bot
+from middlewares.anti_flood import AntiFloodMw
 
 router = Router()
+router.message.middleware(AntiFloodMw())
 
 @router.callback_query(F.data == "my_channels")
 async def get_my_channels(call: types.CallbackQuery):

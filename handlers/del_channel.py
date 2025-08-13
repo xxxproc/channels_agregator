@@ -3,8 +3,10 @@ from aiogram.utils.keyboard import InlineKeyboardMarkup
 from database import Database
 from create_bot import bot, redis
 from filters import IsUserChannel
+from middlewares.anti_flood import AntiFloodMw
 
 router = Router()
+router.message.middleware(AntiFloodMw())
 
 @router.callback_query(F.data == "del_channel")
 async def del_channel(call: types.CallbackQuery):

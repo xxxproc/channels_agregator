@@ -1,9 +1,10 @@
 from aiogram import types, Router, F
 from aiogram.filters import CommandStart
 from aiogram.utils.keyboard import InlineKeyboardMarkup
+from middlewares.anti_flood import AntiFloodMw
 
 router = Router()
-
+router.message.middleware(AntiFloodMw())
 def menu_kb():
     markup = InlineKeyboardMarkup(
         inline_keyboard=[
