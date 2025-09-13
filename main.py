@@ -9,6 +9,8 @@ from handlers.forward_post import router as forward_router
 from handlers.get_my_channels import router as get_channels_router
 from handlers.del_channel import router as del_channel_router
 
+from handlers.errors.base import router as error_router
+
 async def main():
     await create_table()
 
@@ -18,6 +20,8 @@ async def main():
     dp.include_router(forward_router)
     dp.include_router(get_channels_router)
     dp.include_router(del_channel_router)
+
+    dp.include_router(error_router)
 
     logging.basicConfig(
         level=logging.INFO,

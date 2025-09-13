@@ -20,7 +20,7 @@ async def start_command(msg: types.Message):
                         "Чтобы добавить канал в агрегатор, нужно добавить бота в "
                         "администраторы, а затем перекинуть любой пост"
                         "из своего канала сюда(на канале должно быть >150"
-                        "подписчиков)", reply_markup=menu_kb())
+                        "подписчиков)", reply_markup=menu_kbsf())
 
 @router.callback_query(F.data == "main_menu")
 async def main_menu(call: types.CallbackQuery):
