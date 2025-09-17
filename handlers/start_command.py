@@ -1,10 +1,10 @@
 from aiogram import types, Router, F
 from aiogram.filters import CommandStart
 from aiogram.utils.keyboard import InlineKeyboardMarkup
-from middlewares.anti_flood import AntiFloodMw
+
 
 router = Router()
-router.message.middleware(AntiFloodMw())
+
 def menu_kb():
     markup = InlineKeyboardMarkup(
         inline_keyboard=[
@@ -20,7 +20,7 @@ async def start_command(msg: types.Message):
                         "Чтобы добавить канал в агрегатор, нужно добавить бота в "
                         "администраторы, а затем перекинуть любой пост"
                         "из своего канала сюда(на канале должно быть >150"
-                        "подписчиков)", reply_markup=menu_kbsf())
+                        "подписчиков)", reply_markup=menu_kb())
 
 @router.callback_query(F.data == "main_menu")
 async def main_menu(call: types.CallbackQuery):

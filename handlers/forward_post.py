@@ -3,10 +3,10 @@ from collections import defaultdict
 import asyncio
 from database import Database
 from config import id_of_main_channel
-from middlewares.anti_flood import AntiFloodMw
+
 
 router = Router()
-router.message.middleware(AntiFloodMw())
+
 
 media_groups = defaultdict(list)
 media_group_timeouts = {}

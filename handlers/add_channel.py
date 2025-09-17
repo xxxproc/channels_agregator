@@ -6,10 +6,10 @@ from aiogram.fsm.context import FSMContext
 from database import Database
 from create_bot import bot
 from config import link_to_bot
-from middlewares.anti_flood import AntiFloodMw
+
 
 router = Router()
-router.message.middleware(AntiFloodMw())
+
 
 class add_channel(StatesGroup):
     link = State()

@@ -3,6 +3,8 @@ from create_bot import dp, bot
 from database import create_table
 import logging
 
+from middlewares.anti_flood import RateLimitMiddleWare
+
 from handlers.start_command import router as start_command
 from handlers.add_channel import router as add_channel_router
 from handlers.forward_post import router as forward_router
@@ -13,6 +15,8 @@ from handlers.errors.base import router as error_router
 
 async def main():
     await create_table()
+
+    dp.update.middleware(RateLimitMiddleWare())
 
     dp.include_router(add_channel_router)
     dp.include_router(start_command)

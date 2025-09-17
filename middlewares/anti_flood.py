@@ -1,10 +1,12 @@
+from aiogram import BaseMiddleware
+
 from typing import Callable, Dict, Any, Awaitable
 from aiogram import BaseMiddleware
-from aiogram.types import TelegramObject, Message
+from aiogram.types import TelegramObject, Update
 from datetime import datetime, timedelta
 from create_bot import redis
 
-class AntiFloodMw(BaseMiddleware):
+class RateLimitMiddleWare(BaseMiddleware):
     def __init__(
             self, 
             rate_limit: int = 10, 
@@ -15,11 +17,12 @@ class AntiFloodMw(BaseMiddleware):
     async def __call__(
         self,
         handler: Callable[[TelegramObject, Dict[str, Any]], Awaitable[Any]],
-        event: Message,
+        update: Update,
         data: Dict[str, Any]
     ) -> Any:
         
-        user_id = event.from_user.id
+        user_id = update.message.from_user.id if update.message else update.callback_query.message.from_user.id
+
         now = datetime.now().isoformat()
 
         await redis.lpush(f"flood:{user_id}", now)
@@ -32,4 +35,4 @@ class AntiFloodMw(BaseMiddleware):
 
         await redis.expire(f"flood:{user_id}", self.time_interval)
 
-        return await handler(event, data)
+        return await handler(update, data)
